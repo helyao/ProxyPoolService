@@ -1,0 +1,1 @@
+CONFIG_INI = r'D:\open\ProxyPoolService\config.ini'
