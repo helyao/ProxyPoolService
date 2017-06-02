@@ -18,8 +18,10 @@
 import os
 import time
 from datetime import datetime
-
 from apscheduler.schedulers.blocking import BlockingScheduler
+
+import sys
+sys.path.append('..')
 
 from store.operRedis import RedisOperater
 from util.utilFunction import validUsefulProxy, download

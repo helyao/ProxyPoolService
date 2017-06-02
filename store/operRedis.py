@@ -13,6 +13,10 @@
 
 import redis
 import configparser
+
+import sys
+sys.path.append('..')
+
 from config import CONFIG_INI
 
 class RedisOperater():

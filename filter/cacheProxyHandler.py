@@ -13,6 +13,10 @@
 import os
 import redis
 import configparser
+
+import sys
+sys.path.append('..')
+
 from config import CONFIG_INI
 from util.utilFunction import validUsefulProxy
 
