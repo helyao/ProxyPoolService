@@ -15,7 +15,7 @@ import requests
 TESTSIDE = 'https://www.baidu.com/'
 OVERTIME = 10
 
-def validUsefulProxy(proxy, num_retries=2, protocol='https'):
+def validUsefulProxy(proxy, num_retries=2 ):
     # proxies = {protocol: "{protocol}://{proxy}".format(protocol=protocol, proxy=proxy)}
     proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
     try:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-    Filename:   getFreeProxy.py
+    Filename:   xiciProxyApi.py
     Author:     Helyao
     Description:
         Get dynamic proxies list by xici-api.
@@ -55,7 +55,7 @@ class xiciFreeApi():
         print('And invalid proxies array is {}'.format(len(self.invalid_proxies)))
 
 def _task():
-    print('New Task! The time is: {}'.format(datetime.now()))
+    print('XiciDaili Task! The time is: {}'.format(datetime.now()))
     xici = xiciFreeApi()
 
 def run():

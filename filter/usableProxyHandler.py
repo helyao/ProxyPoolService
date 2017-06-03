@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-    Filename:   cacheProxyHandler.py
+    Filename:   usableProxyHandler.py
     Author:     Helyao
     Description:
-        Judge cache proxies
+        Verify usable proxies
 -------------------------------------------------
     Change Logs:
-    2017-06-03 12:18pm   create
+    2017-06-01 7:04pm   create
 -------------------------------------------------
 """
 import os
@@ -21,7 +21,7 @@ sys.path.append('..')
 from config import CONFIG_INI
 from util.utilFunction import validUsefulProxy
 
-class ProxyCacheFilter():
+class ProxyUsableFilter():
     def __init__(self):
         try:
             cp = configparser.ConfigParser()
@@ -39,13 +39,12 @@ class ProxyCacheFilter():
 
     def _handler(self):
         try:
-            proxy = self.rdb.srandmember(self.cachename, 1)[0].decode('utf-8')
-            self.rdb.srem(self.cachename, proxy)
+            proxy = self.rdb.srandmember(self.workinname, 1)[0].decode('utf-8')
             num_retries = 3
             for i in range(0, num_retries):
                 if validUsefulProxy(proxy):
-                    self.roper.addworkin(proxy)
                     return
+            self.rdb.srem(self.workinname, proxy)
         except Exception as ex:
             time.sleep(2)
 
@@ -55,7 +54,7 @@ class ProxyCacheFilter():
             self._handler()
 
 def run():
-    pfilter = ProxyCacheFilter()
+    pfilter = ProxyUsableFilter()
     pfilter.run()
 
 if __name__ == '__main__':

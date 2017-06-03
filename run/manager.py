@@ -16,14 +16,19 @@ from multiprocessing import Process
 sys.path.append('../')
 from api.server import run as ServerRun
 from spider.xiciProxyApi import run as XiciApiRun
-from filter.cacheProxyHandler import run as FilterRun
+from spider.kuaiProxyClawer import run as KuaiClawerRun
+from filter.usableProxyHandler import run as UsableFilterRun
+from filter.cacheProxyHandler import run as CacheFilterRun
+
+# If the cache is bigger and bigger, should lanuch more CacheFilterRun process
+# If the usable proxies rate is low, should lanuch more UsableFilterRun process
 
 # OnlyXiciFreeApi Mode
 def onlyXiciFreeApi():
     proList = list()
     pro1 = Process(target=XiciApiRun, name='XiciApiRun')
     proList.append(pro1)
-    pro2 = Process(target=FilterRun, name='FilterRun')
+    pro2 = Process(target=UsableFilterRun, name='UsableFilterRun')
     proList.append(pro2)
     pro3 = Process(target=ServerRun, name='ServerRun')
     proList.append(pro3)
@@ -32,5 +37,42 @@ def onlyXiciFreeApi():
     for pro in proList:
         pro.join()
 
+# OnlyKuaiFreeClawer Mode
+def onlyKuaiFreeApi():
+    proList = list()
+    pro1 = Process(target=XiciApiRun, name='XiciApiRun')
+    proList.append(pro1)
+    pro2 = Process(target=KuaiClawerRun, name='KuaiClawerRun')
+    proList.append(pro2)
+    pro3 = Process(target=UsableFilterRun, name='UsableFilterRun')
+    proList.append(pro3)
+    pro4 = Process(target=CacheFilterRun, name='CacheFilterRun')
+    proList.append(pro4)
+    pro5 = Process(target=ServerRun, name='ServerRun')
+    proList.append(pro5)
+    for pro in proList:
+        pro.start()
+    for pro in proList:
+        pro.join()
+
+# AllFreeProxy Mode
+def allFreeProxy():
+    proList = list()
+    pro1 = Process(target=KuaiClawerRun, name='KuaiClawerRun')
+    proList.append(pro1)
+    pro2 = Process(target=UsableFilterRun, name='UsableFilterRun')
+    proList.append(pro2)
+    pro3 = Process(target=CacheFilterRun, name='CacheFilterRun')
+    proList.append(pro3)
+    pro4 = Process(target=ServerRun, name='ServerRun')
+    proList.append(pro4)
+    for pro in proList:
+        pro.start()
+    for pro in proList:
+        pro.join()
+
+
 if __name__ == '__main__':
-    onlyXiciFreeApi()
+    # onlyXiciFreeApi()
+    # onlyKuaiFreeApi()
+    allFreeProxy()
