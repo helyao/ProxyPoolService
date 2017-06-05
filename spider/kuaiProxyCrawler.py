@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-    Filename:   kuaiProxyClawer.py
+    Filename:   kuaiProxyCrawler.py
     Author:     Helyao
     Description:
-        Claw proxies from kuaidaili website..
+        Get proxies from kuaidaili website..
 -------------------------------------------------
     KuaiDaili free proxy source supported:
         kuaidaili => http://www.kuaidaili.com/
@@ -26,12 +26,12 @@ from util.utilFunction import download
 
 KUQI_SRC_BASE_URL = 'http://www.kuaidaili.com/'
 
-class kuaiFreeClawer():
+class kuaiFreeCrawler():
     def __init__(self):
         self.roper = RedisOperater()
-        self._clawer()
+        self._crawler()
 
-    def _clawer(self):
+    def _crawler(self):
         for page in range(1, 11):
             url = 'http://www.kuaidaili.com/proxylist/{page}/'.format(page=page)
             html = download(url)
@@ -45,7 +45,7 @@ class kuaiFreeClawer():
 
 def _task():
     print('KuaiDaili Task! The time is: {}'.format(datetime.now()))
-    clawer = kuaiFreeClawer()
+    crawler = kuaiFreeCrawler()
 
 def run():
     _task()

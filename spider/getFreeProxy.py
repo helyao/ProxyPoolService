@@ -4,7 +4,7 @@
     Filename:   getFreeProxy.py
     Author:     Helyao
     Description:
-        Claw proxies from free proxy website
+        Get proxies from free proxy website
 -------------------------------------------------
     Free proxy source supported:
         kuaidaili => http://www.kuaidaili.com/
@@ -19,7 +19,7 @@ from store.operRedis import RedisOperater
 from util.utilFunction import download
 
 
-class ProxyClawer:
+class ProxyCrawler:
 
     def __init__(self):
         self.roper = RedisOperater()
@@ -37,11 +37,11 @@ class ProxyClawer:
                 self.roper.addcache(proxy)
 
 
-# Claw every free proxy source supported
+# get every free proxy source supported
 def run():
-    clawer = ProxyClawer()
+    crawler = ProxyCrawler()
     # get proxy from kuaidaili page 1 ~ 10
-    clawer.proxyKuai()
+    crawler.proxyKuai()
 
 if __name__ == '__main__':
     run()
