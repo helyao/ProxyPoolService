@@ -16,7 +16,7 @@ from multiprocessing import Process
 sys.path.append('../')
 from api.server import run as ServerRun
 from spider.xiciProxyApi import run as XiciApiRun
-from spider.kuaiProxyClawer import run as KuaiClawerRun
+from spider.kuaiProxyCrawler import run as KuaiCrawlerRun
 from filter.usableProxyHandler import run as UsableFilterRun
 from filter.cacheProxyHandler import run as CacheFilterRun
 
@@ -37,12 +37,12 @@ def onlyXiciFreeApi():
     for pro in proList:
         pro.join()
 
-# OnlyKuaiFreeClawer Mode
+# OnlyKuaiFreeCrawler Mode
 def onlyKuaiFreeApi():
     proList = list()
     pro1 = Process(target=XiciApiRun, name='XiciApiRun')
     proList.append(pro1)
-    pro2 = Process(target=KuaiClawerRun, name='KuaiClawerRun')
+    pro2 = Process(target=KuaiCrawlerRun, name='KuaiCrawlerRun')
     proList.append(pro2)
     pro3 = Process(target=UsableFilterRun, name='UsableFilterRun')
     proList.append(pro3)
@@ -58,7 +58,7 @@ def onlyKuaiFreeApi():
 # AllFreeProxy Mode
 def allFreeProxy():
     proList = list()
-    pro1 = Process(target=KuaiClawerRun, name='KuaiClawerRun')
+    pro1 = Process(target=KuaiCrawlerRun, name='KuaiCrawlerRun')
     proList.append(pro1)
     pro2 = Process(target=UsableFilterRun, name='UsableFilterRun')
     proList.append(pro2)
