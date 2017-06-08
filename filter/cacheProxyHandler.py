@@ -39,13 +39,17 @@ class ProxyCacheFilter():
 
     def _handler(self):
         try:
-            proxy = self.rdb.srandmember(self.cachename, 1)[0].decode('utf-8')
-            self.rdb.srem(self.cachename, proxy)
-            num_retries = 3
-            for i in range(0, num_retries):
-                if validUsefulProxy(proxy):
-                    self.roper.addworkin(proxy)
-                    return
+            if (self.rdb.scard(self.cachename) > 0):
+                proxy = self.rdb.srandmember(self.cachename, 1)[0].decode('utf-8')
+                self.rdb.srem(self.cachename, proxy)
+                num_retries = 3
+                for i in range(0, num_retries):
+                    if validUsefulProxy(proxy):
+                        self.rdb.sadd(self.workinname, proxy)
+                        return
+            else:
+                time.sleep(1)
+                return
         except Exception as ex:
             time.sleep(2)
 

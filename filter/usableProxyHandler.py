@@ -39,14 +39,20 @@ class ProxyUsableFilter():
 
     def _handler(self):
         try:
-            proxy = self.rdb.srandmember(self.workinname, 1)[0].decode('utf-8')
-            num_retries = 3
-            for i in range(0, num_retries):
-                if validUsefulProxy(proxy):
-                    return
-            self.rdb.srem(self.workinname, proxy)
+            num = self.rdb.scard(self.workinname)
+            if (num > 0):
+                proxy = self.rdb.srandmember(self.workinname, 1)[0].decode('utf-8')
+                num_retries = 3
+                for i in range(0, num_retries):
+                    if validUsefulProxy(proxy):
+                        if (num <= 3):
+                            time.sleep(3)
+                        return
+                self.rdb.srem(self.workinname, proxy)
+            else:
+                time.sleep(1)
         except Exception as ex:
-            time.sleep(2)
+            time.sleep(1)
 
     def run(self):
         print('Press Ctrl+{} to exit'.format('Break' if os.name == 'nt' else 'C'))
