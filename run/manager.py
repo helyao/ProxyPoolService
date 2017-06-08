@@ -16,6 +16,7 @@ from multiprocessing import Process
 sys.path.append('../')
 from api.server import run as ServerRun
 from spider.xiciProxyApi import run as XiciApiRun
+from spider.blobProxyApi import run as BlobApiRun
 from spider.kuaiProxyCrawler import run as KuaiCrawlerRun
 from filter.usableProxyHandler import run as UsableFilterRun
 from filter.cacheProxyHandler import run as CacheFilterRun
@@ -73,6 +74,7 @@ def allFreeProxy():
 
 
 if __name__ == '__main__':
+    BlobApiRun()
     # onlyXiciFreeApi()
     # onlyKuaiFreeApi()
     allFreeProxy()
