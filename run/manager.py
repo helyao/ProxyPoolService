@@ -74,7 +74,6 @@ def allFreeProxy():
 
 
 if __name__ == '__main__':
-    BlobApiRun()
     # onlyXiciFreeApi()
     # onlyKuaiFreeApi()
     allFreeProxy()

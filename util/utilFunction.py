@@ -11,16 +11,21 @@
 -------------------------------------------------
 """
 import requests
+from random import choice
 
-TESTSIDE = 'https://www.baidu.com/'
+# TESTSIDE = ['https://www.baidu.com/', 'http://cn.bing.com/', 'https://www.sogou.com/', 'https://www.so.com/',
+#             'https://www.douban.com/', 'http://www.sina.com.cn/', 'https://www.jd.com/', 'https://www.taobao.com/']
+TESTSIDE = ['https://www.baidu.com/', 'https://www.jd.com/', 'https://www.taobao.com/']
 OVERTIME = 10
 
-def validUsefulProxy(proxy, num_retries=2 ):
+def validUsefulProxy(proxy, num_retries=2):
     # proxies = {protocol: "{protocol}://{proxy}".format(protocol=protocol, proxy=proxy)}
     proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
     try:
         if num_retries > 0:
-            res = requests.get(TESTSIDE, proxies=proxies, timeout=OVERTIME, verify=False)
+            url = choice(TESTSIDE)
+            print(url)
+            res = requests.get(url, proxies=proxies, timeout=OVERTIME, verify=False)
             print(res.status_code)
             if res.status_code == 200:
                 return True
