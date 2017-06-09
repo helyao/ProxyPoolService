@@ -67,6 +67,8 @@ def allFreeProxy():
     proList.append(pro3)
     pro4 = Process(target=ServerRun, name='ServerRun')
     proList.append(pro4)
+    pro5 = Process(target=BlobApiRun, name='BlobApiRun')
+    proList.append(pro5)
     for pro in proList:
         pro.start()
     for pro in proList:

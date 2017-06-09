@@ -24,6 +24,7 @@ sys.path.append('..')
 
 from store.operRedis import RedisOperater
 from util.utilFunction import validUsefulProxy, download
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 BLOB_API_URL = 'https://jsonblob.com/api/jsonBlob/31bf2dc8-00e6-11e7-a0ba-e39b7fdbe78b'
 
@@ -52,9 +53,19 @@ class blobFreeApi():
         print('And invalid proxies array is {}'.format(len(self.invalid_proxies)))
 
 
-def run():
+def _task():
     blob = blobFreeApi()
     blob._getFilterReport()
+
+def run():
+    _task()
+    scheduler = BlockingScheduler()
+    scheduler.add_job(_task, 'interval', seconds=10000)
+    print('Press Ctrl+{} to exit'.format('Break' if os.name == 'nt' else 'C'))
+    try:
+        scheduler.start()
+    except (KeyboardInterrupt, SystemExit):
+        pass
 
 if __name__ == '__main__':
     run()
