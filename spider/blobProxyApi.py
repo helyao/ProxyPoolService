@@ -11,7 +11,8 @@
         This is a static file, just run once to check the proxies usability.
 -------------------------------------------------
     Change Logs:
-    2017-06-07 6:45am   create
+    2017-06-07  6:45am  create
+    2017-06-09  4:02pm  always loop
 -------------------------------------------------
 """
 import re
@@ -57,7 +58,7 @@ def _task():
     blob = blobFreeApi()
     blob._getFilterReport()
 
-def run():
+def runWithSchedule():
     _task()
     scheduler = BlockingScheduler()
     scheduler.add_job(_task, 'interval', seconds=10000)
@@ -66,6 +67,10 @@ def run():
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
         pass
+
+def run():
+    while True:
+        _task()
 
 if __name__ == '__main__':
     run()
