@@ -33,15 +33,18 @@ class kuaiFreeCrawler():
 
     def _crawler(self):
         for page in range(1, 11):
-            url = 'http://www.kuaidaili.com/proxylist/{page}/'.format(page=page)
-            html = download(url)
-            tree = lxml.html.fromstring(html)
-            ips = tree.cssselect('td[data-title="IP"]')
-            ports = tree.cssselect('td[data-title="PORT"]')
-            for item in range(0, len(ips)):
-                proxy = '{ip}:{port}'.format(ip=ips[item].text, port=ports[item].text)
-                print(proxy)
-                self.roper.addcache(proxy)
+            try:
+                url = 'http://www.kuaidaili.com/proxylist/{page}/'.format(page=page)
+                html = download(url)
+                tree = lxml.html.fromstring(html)
+                ips = tree.cssselect('td[data-title="IP"]')
+                ports = tree.cssselect('td[data-title="PORT"]')
+                for item in range(0, len(ips)):
+                    proxy = '{ip}:{port}'.format(ip=ips[item].text, port=ports[item].text)
+                    print(proxy)
+                    self.roper.addcache(proxy)
+            except Exception as ex:
+                pass
 
 def _task():
     print('KuaiDaili Task! The time is: {}'.format(datetime.now()))
