@@ -69,6 +69,55 @@ class RedisOperater():
     def _test(self):
         self.redisConnectUnitTest(self.rdb)
 
+# Proxy outer website
+class UsRedisOperater():
+
+    def __init__(self):
+        try:
+            cp = configparser.ConfigParser()
+            cp.read(CONFIG_INI)
+            host = cp.get('redis', 'host')
+            port = cp.getint('redis', 'port')
+            db = cp.getint('redis', 'db')
+            self.cachename = cp.get('redis', 'uscache')
+            self.workinname = cp.get('redis', 'usworkin')
+            print('US Redis Connection: {host}:{port}/{db}?uscache={cache}&usworkin={workin}'.format(host=host, port=port, db=db, cache=self.cachename, workin=self.workinname))
+            rconn = redis.ConnectionPool(host=host, port=port, db=db)
+            self.rdb = redis.Redis(connection_pool=rconn)
+        except Exception as ex:
+            print('[operUsRedis]: {}'.format(ex))
+
+    def addCache(self, str):
+        self.rdb.sadd(self.cachename, str)
+
+    def addWorkin(self, str):
+        self.rdb.sadd(self.workinname, str)
+
+    def getCacheNum(self):
+        return self.rdb.scard(self.cachename)
+
+    def getWorkinNum(self):
+        return self.rdb.scard(self.workinname)
+
+    def remCache(self, str):
+        self.rdb.srem(self.cachename, str)
+
+    def remWorkin(self, str):
+        self.rdb.srem(self.workinname, str)
+
+    def getRandomUntrust(self):
+        if self.rdb.scard(self.cachename):
+            return self.rdb.srandmember(self.cachename, 1)[0].decode('utf-8')
+        else:
+            return
+
+    def getRandomUsable(self):
+        if self.rdb.scard(self.workinname):
+            return self.rdb.srandmember(self.workinname, 1)[0].decode('utf-8')
+        else:
+            return
+
+
 if __name__ == '__main__':
     roper = RedisOperater()
     # roper._test()

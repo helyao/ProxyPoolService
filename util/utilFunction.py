@@ -16,14 +16,18 @@ from random import choice
 # TESTSIDE = ['https://www.baidu.com/', 'http://cn.bing.com/', 'https://www.sogou.com/', 'https://www.so.com/',
 #             'https://www.douban.com/', 'http://www.sina.com.cn/', 'https://www.jd.com/', 'https://www.taobao.com/']
 TESTSIDE = ['https://www.baidu.com/', 'https://www.jd.com/', 'https://www.taobao.com/']
+TESTSIDE_US = ['https://www.google.com/', 'http://www.facebook.com/']
 OVERTIME = 10
 
-def validUsefulProxy(proxy, num_retries=2):
+def validUsefulProxy(proxy, num_retries=2, mode='in'):
     # proxies = {protocol: "{protocol}://{proxy}".format(protocol=protocol, proxy=proxy)}
     proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
     try:
         if num_retries > 0:
-            url = choice(TESTSIDE)
+            if mode=='in':
+                url = choice(TESTSIDE)
+            else:
+                url = choice(TESTSIDE_US)
             print(url)
             res = requests.get(url, proxies=proxies, timeout=OVERTIME, verify=False)
             print(res.status_code)
@@ -31,7 +35,10 @@ def validUsefulProxy(proxy, num_retries=2):
                 return True
             elif 500 <= res.status_code < 600:
                 # retry 5XX HTTP errors
-                return validUsefulProxy(proxy, num_retries-1)
+                if mode == 'in':
+                    return validUsefulProxy(proxy, num_retries - 1, 'in')
+                else:
+                    return validUsefulProxy(proxy, num_retries - 1, 'out')
     except Exception as ex:
         print(ex)
         return False

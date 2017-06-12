@@ -11,14 +11,20 @@
 -------------------------------------------------
 """
 from flask import Flask
-from store.operRedis import RedisOperater
+from store.operRedis import RedisOperater, UsRedisOperater
 
 app = Flask(__name__)
 roper = RedisOperater()
+roper_us = UsRedisOperater()
 
 @app.route('/')
 def index():
     proxy = roper.getRandomUsable()
+    return proxy
+
+@app.route('/out')
+def out():
+    proxy = roper_us.getRandomUsable()
     return proxy
 
 def run():
