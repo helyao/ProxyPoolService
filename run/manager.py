@@ -48,9 +48,9 @@ def onlyKuaiFreeApi():
     proList = list()
     pro1 = Process(target=XiciApiRun, name='XiciApiRun')
     proList.append(pro1)
-    pro2 = Process(target=UsUsableFilterRun, name='UsUsableFilterRun')
+    pro2 = Process(target=UsableFilterRun, name='UsableFilterRun')
     proList.append(pro2)
-    pro3 = Process(target=UsCacheFilterRun, name='UsCacheFilterRun')
+    pro3 = Process(target=CacheFilterRun, name='CacheFilterRun')
     proList.append(pro3)
     pro4 = Process(target=ServerRun, name='ServerRun')
     proList.append(pro4)
@@ -62,16 +62,18 @@ def onlyKuaiFreeApi():
 # AllFreeProxy Mode
 def allFreeProxy():
     proList = list()
-    pro1 = Process(target=UsCrawlerRun, name='UsCrawlerRun')
+    pro1 = Process(target=ServerRun, name='ServerRun')
     proList.append(pro1)
-    pro2 = Process(target=UsableFilterRun, name='UsableFilterRun')
+    pro2 = Process(target=XiciApiRun, name='XiciApiRun')
     proList.append(pro2)
-    pro3 = Process(target=CacheFilterRun, name='CacheFilterRun')
+    pro3 = Process(target=BlobApiRun, name='BlobApiRun')
     proList.append(pro3)
-    pro4 = Process(target=ServerRun, name='ServerRun')
+    pro4 = Process(target=KuaiCrawlerRun, name='KuaiCrawlerRun')
     proList.append(pro4)
-    pro5 = Process(target=BlobApiRun, name='BlobApiRun')
+    pro5 = Process(target=UsableFilterRun, name='UsableFilterRun')
     proList.append(pro5)
+    pro6 = Process(target=CacheFilterRun, name='CacheFilterRun')
+    proList.append(pro6)
     for pro in proList:
         pro.start()
     for pro in proList:
@@ -80,13 +82,13 @@ def allFreeProxy():
 # AllFreeProxy Out-website Mode
 def allUsFreeProxy():
     proList = list()
-    pro1 = Process(target=KuaiCrawlerRun, name='KuaiCrawlerRun')
+    pro1 = Process(target=ServerRun, name='ServerRun')
     proList.append(pro1)
-    pro2 = Process(target=UsableFilterRun, name='UsableFilterRun')
+    pro2 = Process(target=UsCrawlerRun, name='UsCrawlerRun')
     proList.append(pro2)
-    pro3 = Process(target=CacheFilterRun, name='CacheFilterRun')
+    pro3 = Process(target=UsUsableFilterRun, name='UsUsableFilterRun')
     proList.append(pro3)
-    pro4 = Process(target=ServerRun, name='ServerRun')
+    pro4 = Process(target=UsCacheFilterRun, name='UsCacheFilterRun')
     proList.append(pro4)
     for pro in proList:
         pro.start()
@@ -97,5 +99,5 @@ def allUsFreeProxy():
 if __name__ == '__main__':
     # onlyXiciFreeApi()
     # onlyKuaiFreeApi()
-    # allFreeProxy()
-    allUsFreeProxy()
+    allFreeProxy()
+    # allUsFreeProxy()
