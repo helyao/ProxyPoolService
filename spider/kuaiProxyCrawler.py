@@ -10,7 +10,8 @@
         kuaidaili => http://www.kuaidaili.com/
 -------------------------------------------------
     Change Logs:
-    2017-06-03 11:56am   create
+    2017-06-03  11:56am     create
+    2017-06-26  17:30pm     change url
 -------------------------------------------------
 """
 import os
@@ -34,7 +35,7 @@ class kuaiFreeCrawler():
     def _crawler(self):
         for page in range(1, 11):
             try:
-                url = 'http://www.kuaidaili.com/proxylist/{page}/'.format(page=page)
+                url = 'http://www.kuaidaili.com/free/inha/{page}/'.format(page=page)
                 html = download(url)
                 tree = lxml.html.fromstring(html)
                 ips = tree.cssselect('td[data-title="IP"]')
