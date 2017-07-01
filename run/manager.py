@@ -19,7 +19,8 @@ from spider.xiciProxyApi import run as XiciApiRun
 from spider.blobProxyApi import run as BlobApiRun
 from spider.xiciNTProxyCrawler import run as XiciNTCrawlerRun
 from spider.xiciNNProxyCrawler import run as XiciNNCrawlerRun
-from spider.kuaiProxyCrawler import run as KuaiCrawlerRun
+from spider.kuaiInhaProxyCrawler import run as KuaiInhaCrawlerRun
+from spider.kuaiIntrProxyCrawler import run as KuaiIntrCrawlerRun
 from filter.usableProxyHandler import run as UsableFilterRun
 from filter.cacheProxyHandler import run as CacheFilterRun
 
@@ -70,20 +71,22 @@ def allFreeProxy():
     proList.append(pro2)
     pro3 = Process(target=XiciNNCrawlerRun, name='XiciNNCrawlerRun')
     proList.append(pro3)
-    pro4 = Process(target=BlobApiRun, name='BlobApiRun')
+    pro4 = Process(target=KuaiInhaCrawlerRun, name='KuaiInhaCrawlerRun')
     proList.append(pro4)
-    pro5 = Process(target=KuaiCrawlerRun, name='KuaiCrawlerRun')
+    pro5 = Process(target=KuaiIntrCrawlerRun, name='KuaiIntrCrawlerRun')
     proList.append(pro5)
-    pro6 = Process(target=UsableFilterRun, name='UsableFilterRun')
+    pro6 = Process(target=BlobApiRun, name='BlobApiRun')
     proList.append(pro6)
     pro7 = Process(target=XiciApiRun, name='XiciApiRun')
     proList.append(pro7)
-    pro7 = Process(target=CacheFilterRun, name='CacheFilterRun')
-    proList.append(pro7)
-    pro7 = Process(target=CacheFilterRun, name='CacheFilterRun')
-    proList.append(pro7)
-    pro7 = Process(target=CacheFilterRun, name='CacheFilterRun')
-    proList.append(pro7)
+    pro8 = Process(target=UsableFilterRun, name='UsableFilterRun')
+    proList.append(pro8)
+    pro9 = Process(target=CacheFilterRun, name='CacheFilterRun1')
+    proList.append(pro9)
+    pro10 = Process(target=CacheFilterRun, name='CacheFilterRun2')
+    proList.append(pro10)
+    pro11 = Process(target=CacheFilterRun, name='CacheFilterRun3')
+    proList.append(pro11)
     for pro in proList:
         pro.start()
     for pro in proList:

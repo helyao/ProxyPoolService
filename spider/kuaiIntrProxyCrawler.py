@@ -28,7 +28,7 @@ from util.utilFunction import download2
 
 KUQI_SRC_BASE_URL = 'http://www.kuaidaili.com/'
 
-class kuaiFreeCrawler():
+class kuaiIntrFreeCrawler():
     def __init__(self):
         self.roper = RedisOperater()
         self._crawler()
@@ -36,7 +36,7 @@ class kuaiFreeCrawler():
     def _crawler(self):
         for page in range(1, 11):
             try:
-                url = 'http://www.kuaidaili.com/free/inha/{page}/'.format(page=page)
+                url = 'http://www.kuaidaili.com/free/intr/{page}/'.format(page=page)
                 html = download2(url)
                 tree = lxml.html.fromstring(html)
                 ips = tree.cssselect('td[data-title="IP"]')
@@ -51,7 +51,7 @@ class kuaiFreeCrawler():
 
 def _task():
     print('KuaiDaili Task! The time is: {}'.format(datetime.now()))
-    crawler = kuaiFreeCrawler()
+    crawler = kuaiIntrFreeCrawler()
 
 def run():
     _task()
