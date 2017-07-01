@@ -17,6 +17,7 @@ sys.path.append('../')
 from api.server import run as ServerRun
 from spider.xiciProxyApi import run as XiciApiRun
 from spider.blobProxyApi import run as BlobApiRun
+from spider.xiciProxyCrawler import run as XiciCrawlerRun
 from spider.kuaiProxyCrawler import run as KuaiCrawlerRun
 from filter.usableProxyHandler import run as UsableFilterRun
 from filter.cacheProxyHandler import run as CacheFilterRun
@@ -64,7 +65,7 @@ def allFreeProxy():
     proList = list()
     pro1 = Process(target=ServerRun, name='ServerRun')
     proList.append(pro1)
-    pro2 = Process(target=XiciApiRun, name='XiciApiRun')
+    pro2 = Process(target=XiciCrawlerRun, name='XiciCrawlerRun')
     proList.append(pro2)
     pro3 = Process(target=BlobApiRun, name='BlobApiRun')
     proList.append(pro3)
