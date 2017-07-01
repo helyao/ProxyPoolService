@@ -24,7 +24,7 @@ import sys
 sys.path.append('..')
 
 from store.operRedis import RedisOperater
-from util.utilFunction import validUsefulProxy, download
+from util.utilFunction import validUsefulProxy, download2
 
 XICI_API_URL = 'http://api.xicidaili.com/free2016.txt'
 
@@ -35,7 +35,7 @@ class xiciFreeApi():
         self.vaild_proxies = []
         self.invalid_proxies = []
         self.roper = RedisOperater()
-        list = download(XICI_API_URL)
+        list = download2(XICI_API_URL)
         self.all_proxies = list.split('\r\n')
         self._proxyFilter()
         self._getFilterReport()

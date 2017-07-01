@@ -13,6 +13,11 @@
 import requests
 from random import choice
 
+import sys
+sys.path.append('..')
+
+from store.operRedis import RedisOperater
+
 # TESTSIDE = ['https://www.baidu.com/', 'http://cn.bing.com/', 'https://www.sogou.com/', 'https://www.so.com/',
 #             'https://www.douban.com/', 'http://www.sina.com.cn/', 'https://www.jd.com/', 'https://www.taobao.com/']
 TESTSIDE = ['https://www.baidu.com/', 'https://www.jd.com/', 'https://www.taobao.com/']
@@ -44,6 +49,31 @@ def validUsefulProxy(proxy, num_retries=2, mode='in'):
         return False
 
 def download(url, timeout=10, user_agent='wswp', num_retries=2):
+    print('Downloading: {url}'.format(url=url))
+    headers = {'User-agent': user_agent}
+    try:
+        redis = RedisOperater()
+        proxy = redis.getRandomUsable()
+        if proxy:
+            proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
+            response = requests.get(url, proxies=proxies, headers=headers, timeout=timeout)
+        else:
+            response = requests.get(url, headers=headers, timeout=timeout)
+        code = response.status_code
+        if (num_retries > 0):
+            if (500 <= code < 600):
+                return download(url, timeout, user_agent, num_retries-1)
+        else:
+            return None
+        html = response.text
+        return html
+    except requests.ReadTimeout as ex:
+        print('Download Timeout: {ex}'.format(ex=ex))
+        return download(url, timeout, user_agent, num_retries - 1)
+    except Exception as ex:
+        print('Download error: {ex}'.format(ex=ex))
+
+def download2(url, timeout=10, user_agent='wswp', num_retries=2):
     print('Downloading: {url}'.format(url=url))
     headers = {'User-agent': user_agent}
     try:

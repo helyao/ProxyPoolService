@@ -15,6 +15,7 @@
 -------------------------------------------------
 """
 import os
+import time
 import lxml.html
 from datetime import datetime
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -23,7 +24,7 @@ import sys
 sys.path.append('..')
 
 from store.operRedis import RedisOperater
-from util.utilFunction import download
+from util.utilFunction import download2
 
 KUQI_SRC_BASE_URL = 'http://www.kuaidaili.com/'
 
@@ -36,7 +37,7 @@ class kuaiFreeCrawler():
         for page in range(1, 11):
             try:
                 url = 'http://www.kuaidaili.com/free/inha/{page}/'.format(page=page)
-                html = download(url)
+                html = download2(url)
                 tree = lxml.html.fromstring(html)
                 ips = tree.cssselect('td[data-title="IP"]')
                 ports = tree.cssselect('td[data-title="PORT"]')
@@ -44,8 +45,9 @@ class kuaiFreeCrawler():
                     proxy = '{ip}:{port}'.format(ip=ips[item].text, port=ports[item].text)
                     print(proxy)
                     self.roper.addcache(proxy)
+                time.sleep(10)
             except Exception as ex:
-                pass
+                print(ex)
 
 def _task():
     print('KuaiDaili Task! The time is: {}'.format(datetime.now()))
