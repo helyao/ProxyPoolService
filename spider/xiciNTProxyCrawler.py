@@ -27,7 +27,7 @@ from util.utilFunction import download2
 
 KUQI_SRC_BASE_URL = 'http://www.xicidaili.com/'
 
-class xiciFreeCrawler():
+class xiciNTFreeCrawler():
     def __init__(self):
         self.roper = RedisOperater()
         self._crawler()
@@ -53,7 +53,7 @@ class xiciFreeCrawler():
 
 def _task():
     print('XiciDaili Task! The time is: {}'.format(datetime.now()))
-    crawler = xiciFreeCrawler()
+    crawler = xiciNTFreeCrawler()
 
 def run():
     _task()
