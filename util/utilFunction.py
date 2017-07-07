@@ -81,14 +81,14 @@ def download2(url, timeout=10, user_agent='wswp', num_retries=2):
         code = response.status_code
         if (num_retries > 0):
             if (500 <= code < 600):
-                return download(url, timeout, user_agent, num_retries-1)
+                return download2(url, timeout, user_agent, num_retries-1)
         else:
             return None
         html = response.text
         return html
     except requests.ReadTimeout as ex:
         print('Download Timeout: {ex}'.format(ex=ex))
-        return download(url, timeout, user_agent, num_retries - 1)
+        return download2(url, timeout, user_agent, num_retries - 1)
     except Exception as ex:
         print('Download error: {ex}'.format(ex=ex))
 
