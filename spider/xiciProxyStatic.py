@@ -33,7 +33,7 @@ class xiciStaticProxy():
         self._crawler()
 
     def _crawler(self):
-        for page in range(1, 174):
+        for page in range(1, 20):
             try:
                 filename = 'xici/xici{}.list'.format(page)
                 with open(filename, 'r', encoding='utf-8') as f:
