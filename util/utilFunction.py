@@ -22,7 +22,7 @@ from store.operRedis import RedisOperater
 #             'https://www.douban.com/', 'http://www.sina.com.cn/', 'https://www.jd.com/', 'https://www.taobao.com/']
 TESTSIDE = ['https://www.baidu.com/', 'https://www.jd.com/', 'https://www.taobao.com/']
 TESTSIDE_US = ['https://www.google.com/', 'http://www.facebook.com/']
-OVERTIME = 20
+OVERTIME = 10
 
 def validUsefulProxy(proxy, num_retries=2, mode='in'):
     # proxies = {protocol: "{protocol}://{proxy}".format(protocol=protocol, proxy=proxy)}
@@ -96,5 +96,5 @@ def _base_test(ip):
     print('Test when proxy = {} is {}'.format(ip, validUsefulProxy(ip)))
 
 if __name__ == '__main__':
-    ip = '176.118.231.15:8080'
+    ip = '171.12.164.140:808'
     _base_test(ip)
