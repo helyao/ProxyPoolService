@@ -141,6 +141,12 @@ def allFreeProxyCache():
     proList.append(pro13)
     pro14 = Process(target=CacheFilterRun, name='CacheFilterRun8')
     proList.append(pro14)
+    pro15 = Process(target=CacheFilterRun, name='CacheFilterRun9')
+    proList.append(pro15)
+    pro16 = Process(target=CacheFilterRun, name='CacheFilterRun10')
+    proList.append(pro16)
+    pro17 = Process(target=CacheFilterRun, name='CacheFilterRun11')
+    proList.append(pro17)
     for pro in proList:
         pro.start()
     for pro in proList:
